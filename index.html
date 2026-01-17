@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting to TearsUnplugged...</title>
+    <meta charset="UTF-8">
+    <script>
+        window.onload = function() {
+            // REPLACE THE URL BELOW with your actual YouTube Playlist Link
+            var myPlaylist = https://www.youtube.com/playlist?list=PLJawqgOZbhNWrG9FtUnuV7fN-7RwaYU_f;
+            
+            // This is the "Magic" code that tries to open the YouTube App directly
+            var appUrl = myPlaylist.replace("https://www.youtube.com", "youtube://www.youtube.com");
+
+            // 1. Try to open the app
+            window.location = appUrl;
+
+            // 2. Fallback: If the app doesn't open in 2 seconds, open in browser
+            setTimeout(function() {
+                window.location = myPlaylist;
+            }, 2000);
+        };
+    </script>
+</head>
+<body style="background-color: #111; color: white; text-align: center; font-family: sans-serif; padding-top: 50px;">
+    <h2>Loading TearsUnplugged Melodies...</h2>
+    <p>If you are not redirected, <a href="#" onclick="window.location.reload();" style="color: #3ea6ff;">click here</a>.</p>
+</body>
+</html>
