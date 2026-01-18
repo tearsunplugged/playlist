@@ -1,28 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Redirecting to TearsUnplugged...</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opening TearsUnplugged...</title>
+    <style>
+        body { background: #000; color: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-align: center; padding: 50px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 80vh; margin: 0; }
+        .loader { border: 4px solid #333; border-top: 4px solid #ff0000; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        h2 { font-size: 1.5rem; margin-bottom: 10px; }
+        p { color: #aaa; margin-bottom: 30px; }
+        .btn { background: #ff0000; color: #fff; padding: 15px 35px; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(255,0,0,0.3); transition: transform 0.2s; }
+        .btn:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+
+    <div class="loader"></div>
+    <h2>Redirecting to YouTube</h2>
+    <p>Opening your TearsUnplugged playlist...</p>
+
+    <a href="intent://www.youtube.com/playlist?list=PLJawqgOZbhNWrG9FtUnuV7fN-7RwaYU_f#Intent;package=com.google.android.youtube;scheme=https;end" class="btn">Click to Open in App</a>
+
     <script>
         window.onload = function() {
-            // REPLACE THE URL BELOW with your actual YouTube Playlist Link
-            var myPlaylist = https://www.youtube.com/playlist?list=PLJawqgOZbhNWrG9FtUnuV7fN-7RwaYU_f;
+            var playlistID = "PLJawqgOZbhNWrG9FtUnuV7fN-7RwaYU_f";
+            var webUrl = "https://www.youtube.com/playlist?list=" + playlistID;
             
-            // This is the "Magic" code that tries to open the YouTube App directly
-            var appUrl = myPlaylist.replace("https://www.youtube.com", "youtube://www.youtube.com");
+            // 1. Android Deep Link (Strongest method for FB browser)
+            var androidIntent = "intent://www.youtube.com/playlist?list=" + playlistID + "#Intent;package=com.google.android.youtube;scheme=https;end";
+            
+            // 2. iOS Deep Link
+            var iosUrl = "youtube://www.youtube.com/playlist?list=" + playlistID;
 
-            // 1. Try to open the app
-            window.location = appUrl;
+            // Detection
+            var isAndroid = /Android/i.test(navigator.userAgent);
+            var isiOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-            // 2. Fallback: If the app doesn't open in 2 seconds, open in browser
+            if (isAndroid) {
+                window.location.href = androidIntent;
+            } else if (isiOS) {
+                window.location.href = iosUrl;
+            } else {
+                window.location.href = webUrl;
+            }
+
+            // Fallback: If the app doesn't open in 3 seconds, go to the web version
             setTimeout(function() {
-                window.location = myPlaylist;
-            }, 2000);
+                window.location.href = webUrl;
+            }, 3000);
         };
     </script>
-</head>
-<body style="background-color: #111; color: white; text-align: center; font-family: sans-serif; padding-top: 50px;">
-    <h2>Loading TearsUnplugged Melodies...</h2>
-    <p>If you are not redirected, <a href="#" onclick="window.location.reload();" style="color: #3ea6ff;">click here</a>.</p>
 </body>
 </html>
